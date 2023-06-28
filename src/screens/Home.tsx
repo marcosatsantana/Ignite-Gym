@@ -5,7 +5,7 @@ import { VStack, Text, HStack, FlatList, Heading } from 'native-base'
 import { useState } from 'react'
 
 export default function Home() {
-    const [groupSelected, setGroupSelected] = useState('ombro');
+    const [groupSelected, setGroupSelected] = useState('costas');
     const [groups, setGroups] = useState(['costas', 'ombro', 'Biceps', 'Triceps']);
     const [exercises, setExercises] = useState(['Puxada frontal', 'Remada curvada', 'Remada unilateral', 'Levantamento terra']);
 
