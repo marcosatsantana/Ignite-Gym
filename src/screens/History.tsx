@@ -21,6 +21,7 @@ export default function History() {
                 px={8}
                 sections={exercises}
                 keyExtractor={item => item}
+                showsVerticalScrollIndicator={false}
                 renderItem={({ item }) => (
                     <HistoryCard />
                 )}
