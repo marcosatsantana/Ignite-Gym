@@ -1,19 +1,55 @@
 import { Button } from '@components/Button';
 import { Input } from '@components/Input';
 import { ScreenHeader } from '@components/ScreenHeader';
+import * as ImagePiker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 import { UserPhoto } from '@components/UserPhoto';
-import { Center, Heading, ScrollView, Skeleton, Text, VStack } from 'native-base';
+import { Center, Heading, ScrollView, Skeleton, Text, VStack, useToast } from 'native-base';
 import { useState } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { Alert, TouchableOpacity } from 'react-native';
+
 
 const PHOTO_SIZE = 33;
 
 export default function Profile() {
     const [photoIsLoading, setPhotoIsLoading] = useState(false);
+    const [userPhoto, setUserPhoto] = useState('https://github.com/marcosxk122.png');
+    const toast = useToast();
+
+    async function handleUserPhotoSelect() {
+        setPhotoIsLoading(true);
+        try {
+            const photoSelected = await ImagePiker.launchImageLibraryAsync({
+                mediaTypes: ImagePiker.MediaTypeOptions.Images,
+                quality: 1,
+                aspect: [4, 4],
+                allowsEditing: true,
+                selectionLimit: 1
+            });
+            if (photoSelected.canceled) return;
+
+            if (photoSelected.assets[0].uri) {
+                const photoInfo = await FileSystem.getInfoAsync(photoSelected.assets[0].uri);
+
+                if (photoInfo.exists && (photoInfo.size / 1024 / 1024) > 1) {
+                    return toast.show({
+                        title: 'Essa imagem é muito grande, escolha outra foto',
+                        placement: 'top',
+                        bgColor: 'red.500'
+                    })
+                }
+                setUserPhoto(photoSelected.assets[0].uri);
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setPhotoIsLoading(false);
+        }
+    }
     return (
         <VStack flex={1}>
             <ScreenHeader title='Perfil' />
-            <ScrollView contentContainerStyle={{paddingBottom: 36}}>
+            <ScrollView contentContainerStyle={{ paddingBottom: 36 }}>
                 <Center mt={6} px={10}>
                     {
                         photoIsLoading ?
@@ -26,12 +62,12 @@ export default function Profile() {
                             />
                             :
                             <UserPhoto
-                                source={{ uri: 'https://github.com/marcosxk122.png' }}
+                                source={{ uri: userPhoto }}
                                 alt='Foto do usuario'
                                 size={PHOTO_SIZE}
                             />
                     }
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={handleUserPhotoSelect}>
                         <Text color='green.500' fontWeight='bold' fontSize='md' mt={2} mb={8}>
                             Alterar foto
                         </Text>
@@ -46,7 +82,7 @@ export default function Profile() {
                         value='marcosxk@gmail.com'
                         isDisabled
                     />
-                    <Heading color='gray.200' fontSize='md' mb={2} alignSelf='flex-start' mt={12}>Alterar senha</Heading>
+                    <Heading fontFamily='heading' color='gray.200' fontSize='md' mb={2} alignSelf='flex-start' mt={12}>Alterar senha</Heading>
                     <Input
                         bg='gray.600'
                         placeholder='Senha antiga'

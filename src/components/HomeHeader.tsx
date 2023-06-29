@@ -9,7 +9,7 @@ export function HomeHeader() {
             <UserPhoto source={{ uri: 'https://github.com/marcosxk122.png' }} size={16} alt="Imagem do usuário" mr={4} />
             <VStack flex={1}>
                 <Text color='gray.100' fontSize='md'>Olá,</Text>
-                <Heading color='gray.100' fontSize='md'>Marcos</Heading>
+                <Heading color='gray.100' fontSize='md' fontFamily='heading'>Marcos</Heading>
             </VStack>
             <TouchableOpacity>
                 <Icon as={MaterialIcons} size={7} name="logout" color='gray.200' />

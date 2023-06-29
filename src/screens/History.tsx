@@ -26,7 +26,7 @@ export default function History() {
                     <HistoryCard />
                 )}
                 renderSectionHeader={({ section }) => (
-                    <Heading color='gray.200' fontSize='md' mt={10} mb={3}>{section.title}</Heading>
+                    <Heading fontFamily='heading' color='gray.200' fontSize='md' mt={10} mb={3}>{section.title}</Heading>
                 )}
                 contentContainerStyle={exercises.length === 0 && { flex: 1, justifyContent: 'center' }}
                 ListEmptyComponent={() => (
