@@ -6,7 +6,7 @@ import * as FileSystem from 'expo-file-system';
 import { UserPhoto } from '@components/UserPhoto';
 import { Center, Heading, ScrollView, Skeleton, Text, VStack, useToast } from 'native-base';
 import { useState } from 'react';
-import { Alert, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
 
 const PHOTO_SIZE = 33;
@@ -79,7 +79,6 @@ export default function Profile() {
                     <Input
                         bg='gray.600'
                         placeholder='Email'
-                        value='marcosxk@gmail.com'
                         isDisabled
                     />
                     <Heading fontFamily='heading' color='gray.200' fontSize='md' mb={2} alignSelf='flex-start' mt={12}>Alterar senha</Heading>
